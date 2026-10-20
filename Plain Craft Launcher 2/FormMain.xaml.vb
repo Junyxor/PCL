@@ -414,14 +414,19 @@ Public Class FormMain
         RunInNewThread(
         Sub()
             'EULA 提示
-            Const EulaVersion As Integer = 2
+            Const EulaVersion As Integer = 3
             If Settings.Get(Of Integer)("SystemEulaVersion") < EulaVersion Then
-                Select Case MyMsgBox(
-                    If(Settings.Get(Of Integer)("SystemEulaVersion") = 0,
-                        "在使用 PCL 前，请先阅读用户协议与免责声明。",
-                        $"PCL 的用户协议与免责声明已更新。{vbCrLf}请阅读更新后的用户协议与免责声明。"),
-                        "协议授权", "同意", "拒绝", "查看用户协议与免责声明",
-                        Button3Action:=Sub() OpenWebsite("https://shimo.im/docs/rGrd8pY8xWkt6ryW"))
+                Dim EulaText As String =
+                    $"欢迎使用 {ProjectDisplayName}。" & vbCrLf & vbCrLf &
+                    "本程序是基于 PCL 2.99.0.0 源码构建的非官方第三方版本，恢复了 MC 下载与整合包安装功能。" & vbCrLf &
+                    "这是一个特殊时期的临时解决方案：一旦 PCL 官方恢复下载功能，本项目将立即归档、不再维护。" & vbCrLf &
+                    "PCL 的著作权归原作者龙腾猫跃及贡献者所有，本构建与其无隶属或背书关系。" & vbCrLf & vbCrLf &
+                    "【免责声明】" & vbCrLf &
+                    "本程序按「现状」提供，不附带任何明示或暗示的担保。因使用本程序导致的任何直接或间接损失，包括数据丢失、账号风险、下载内容合规性等，均由使用者自行承担。" & vbCrLf &
+                    "请自行确认你所在地区对 Minecraft、第三方启动器及相关资源下载的法律法规要求。"
+                Select Case MyMsgBox(EulaText,
+                    "协议与免责声明", "同意", "拒绝", "查看项目页面",
+                    Button3Action:=Sub() OpenWebsite($"https://github.com/{UpdateRepo}"))
                     Case 1
                         Settings.Set("SystemEulaVersion", EulaVersion)
                     Case 2
@@ -447,9 +452,22 @@ Public Class FormMain
             End Try
             '上报
             Telemetry("启动")
-            '开源版本提示
+            '本构建说明
             If VersionBranchMain = "OpenSource" Then
-                MyMsgBox($"该版本中无法使用以下特性：{vbCrLf}- CurseForge API 调用：需要自行申请 API Key，然后添加到 ModSecret.vb 的开头{vbCrLf}- 正版登录：需要自行向微软申请 Client ID，然后添加到 ModSecret.vb 的开头{vbCrLf}- 更新与联网通知：避免滥用隐患{vbCrLf}- 主题切换：这是需要赞助解锁的纪念性质的功能，别让赞助者太伤心啦……{vbCrLf}- 百宝箱：开发早期往里面塞了些开发工具，整理起来太麻烦了……", "开源版本说明")
+                MyMsgBox(
+                    $"这是 {ProjectDisplayName}，基于 PCL 2.99.0.0 源码构建的非官方第三方版本。{vbCrLf}{vbCrLf}" &
+                    $"本构建恢复了上游已移除的 MC 下载与整合包安装功能，并内置了可用的微软登录与 CurseForge 访问凭据。{vbCrLf}{vbCrLf}" &
+                    "这是特殊时期的临时解决方案：一旦 PCL 官方恢复下载功能，本项目将立即归档、不再维护。" & vbCrLf & vbCrLf &
+                    $"发布地址：https://github.com/{UpdateRepo}/releases{vbCrLf}" &
+                    $"程序内「检查更新」即检查该仓库的最新 Release。{vbCrLf}{vbCrLf}" &
+                    "【版权声明】" & vbCrLf &
+                    "PCL（Plain Craft Launcher）的著作权归原作者龙腾猫跃及贡献者所有，本项目仅依据其公开许可证进行二次修改与分发，与原作者无任何隶属或背书关系。" & vbCrLf & vbCrLf &
+                    "【免责声明】" & vbCrLf &
+                    "本程序按「现状」提供，不附带任何明示或暗示的担保。使用本程序产生的任何直接或间接后果，包括但不限于数据丢失、账号风险、下载内容合规性，均由使用者自行承担。" & vbCrLf &
+                    "请自行确认你所在地区对 Minecraft、第三方启动器及相关资源下载的法律法规要求。" & vbCrLf & vbCrLf &
+                    $"源码与构建说明：https://github.com/{UpdateRepo}",
+                    "关于本构建", "我已了解", "打开项目页面",
+                    Button2Action:=Sub() OpenWebsite($"https://github.com/{UpdateRepo}"))
             End If
         End Sub, "初始化", ThreadPriority.Lowest)
 
