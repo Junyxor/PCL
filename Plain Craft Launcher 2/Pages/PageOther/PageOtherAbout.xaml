@@ -20,7 +20,7 @@
                     </Grid.ColumnDefinitions>
                     <local:MyListItem IsHitTestVisible="False" Title="龙腾猫跃" Margin="-5,0,15,0" Info="Plain Craft Launcher 的开发者！" Grid.Row="0" Grid.Column="1" />
                     <local:MyListItem IsHitTestVisible="False" Title="HerobrineXia" Margin="-5,0,15,0" Info="Plain Craft Launcher 的协力开发者！" Grid.Row="1" Grid.Column="1" />
-                    <local:MyListItem IsHitTestVisible="False" Title="Plain Craft Launcher 2" Margin="-5,0,15,0" Info="当前版本：%VERSION%（%VERSIONCODE%.%BRANCH%）" Grid.Row="2" Grid.Column="1" x:Name="ItemAboutPcl" />
+                    <local:MyListItem IsHitTestVisible="False" Title="PCL 2.99 Unlocked" Margin="-5,0,15,0" Info="第三方构建：%VERSION%（%VERSIONCODE%.%BRANCH%）" Grid.Row="2" Grid.Column="1" x:Name="ItemAboutPcl" />
                     <Image Source="/Plain Craft Launcher 2;component/Images/Heads/LTCat.jpg" Grid.Row="0" Margin="3">
                         <Image.Clip>
                             <EllipseGeometry Center="17 17" RadiusX="17" RadiusY="17" />
@@ -36,11 +36,23 @@
                             <EllipseGeometry Center="17 17" RadiusX="17" RadiusY="17" />
                         </Image.Clip>
                     </Image>
-                    <local:MyButton Text="赞助 PCL !" Grid.Column="2" Grid.Row="0" Height="35" ColorType="Highlight"
-                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://meloong.com/afd/a/LTCat" />
+                    <local:MyButton Text="项目主页" Grid.Column="2" Grid.Row="0" Height="35" ColorType="Highlight"
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://github.com/Junyxor/PCL" />
                     <local:MyButton Text="检查更新" Grid.Column="2" Grid.Row="2" Height="35" 
                                     x:Name="BtnAboutUpdate" />
                 </Grid>
+            </local:MyCard>
+            <local:MyCard Margin="0,0,0,15" Title="关于本构建">
+                <StackPanel Margin="25,40,25,18">
+                    <TextBlock TextWrapping="WrapWithOverflow" LineHeight="21" FontSize="13" Foreground="{DynamicResource ColorBrushGray2}"
+                               Text="本程序是基于 PCL 2.99.0.0 公开源码构建的非官方第三方版本，恢复了上游已移除的 MC 下载与整合包安装功能，并内置了微软登录与 CurseForge 访问所需的凭据。&#xa;&#xa;这是一个特殊时期的临时解决方案：一旦 PCL 官方恢复下载功能，本项目将立即归档、不再维护。&#xa;&#xa;本构建并非官方发布，不提供任何形式的官方支持。更新检测指向本项目自己的 GitHub Releases，不会从官方渠道自动更新。" />
+                </StackPanel>
+            </local:MyCard>
+            <local:MyCard Margin="0,0,0,15" Title="版权与免责声明">
+                <StackPanel Margin="25,40,25,18">
+                    <TextBlock TextWrapping="WrapWithOverflow" LineHeight="21" FontSize="13" Foreground="{DynamicResource ColorBrushGray2}"
+                               Text="PCL（Plain Craft Launcher）的著作权归原作者龙腾猫跃及贡献者所有。本项目仅依据其公开许可证对源码进行修改与分发，与原作者无隶属、合作或背书关系。&#xa;&#xa;本程序按「现状」提供，不附带任何明示或暗示的担保。因使用本程序产生的任何直接或间接后果，包括但不限于数据丢失、账号风险、下载内容的合规性，均由使用者自行承担。&#xa;&#xa;请自行确认你所在地区对 Minecraft、第三方启动器及相关资源下载的法律法规要求。" />
+                </StackPanel>
             </local:MyCard>
             <local:MyCard Margin="0,0,0,15" Title="特别鸣谢">
                 <Grid Margin="21,40,21,16">
