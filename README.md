@@ -1,5 +1,13 @@
 # Plain Craft Launcher
 
+> **⚠ 本项目是特殊时期的临时解决方案**
+>
+> 本仓库是 [PCL](https://github.com/Meloong-Git/PCL) 的非官方临时分支。由于 PCL 上游在 2.99.0.0 中出于合规考虑移除了 Minecraft 下载与整合包安装功能，本分支临时恢复这些入口，供已了解并自行承担相关责任的使用者使用。
+>
+> **一旦 PCL 官方恢复下载功能，本仓库将立即归档，不再维护。**
+>
+> 本分支与原作者龙腾猫跃及 PCL 贡献者无隶属、合作或背书关系。PCL 的著作权归原作者所有，本分支仅依据其公开许可证进行修改与分发。本程序按「现状」提供，不附带任何担保，使用风险由使用者自行承担。
+
 [![Stars](https://img.shields.io/github/stars/Meloong-Git/PCL?style=flat&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTggLjI1YS43NS43NSAwIDAgMSAuNjczLjQxOGwxLjg4MiAzLjgxNSA0LjIxLjYxMmEuNzUuNzUgMCAwIDEgLjQxNiAxLjI3OWwtMy4wNDYgMi45Ny43MTkgNC4xOTJhLjc1MS43NTEgMCAwIDEtMS4wODguNzkxTDggMTIuMzQ3bC0zLjc2NiAxLjk4YS43NS43NSAwIDAgMS0xLjA4OC0uNzlsLjcyLTQuMTk0TC44MTggNi4zNzRhLjc1Ljc1IDAgMCAxIC40MTYtMS4yOGw0LjIxLS42MTFMNy4zMjcuNjY4QS43NS43NSAwIDAgMSA4IC4yNVoiIGZpbGw9IiNlYWM1NGYiLz48L3N2Zz4=&logoSize=auto&label=Stars&labelColor=444444&color=eac54f)](https://github.com/Meloong-Git/PCL/)
 [![Issues](https://img.shields.io/github/issues/Meloong-Git/PCL?style=flat&label=Issues&labelColor=444444&color=1F883D)](https://github.com/Meloong-Git/PCL/issues)
 [![哔哩哔哩](https://img.shields.io/badge/动态-BiliBili-00A4DB?style=flat&labelColor=444444&logoSize=auto)](https://space.bilibili.com/11343203/dynamic)
