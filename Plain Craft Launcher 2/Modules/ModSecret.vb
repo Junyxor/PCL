@@ -7,15 +7,20 @@ Friend Module ModSecret
     '在开源版的注册表与常规版的注册表隔离，以防数据冲突
     Public Const RegFolder As String = "PCLDebug"
     '用于微软登录的 ClientId
-    Public OAuthClientId As String = If(Environment.GetEnvironmentVariable("PCL_MS_CLIENT_ID"), "")
+    Public OAuthClientId As String = "fe72edc2-3a6f-4280-90e8-e2beb64ce7e1"
     'CurseForge API Key
-    Public CurseForgeAPIKey As String = If(Environment.GetEnvironmentVariable("PCL_CURSEFORGE_API_KEY"), "")
+    Public CurseForgeAPIKey As String = "$2a$10$7WWV1WELcwX8Xp7d68MHs.5grTyZVa6SynyeSyMh1rsE89nIa09zO"
     '用于匿名数据收集的腾讯云日志服务上报 URL，形如 https://{region}.cls.tencentcs.com/track?topic_id={topic_id}
     Public Const ClsBaseUrl As String = ""
 
 #Region "网络鉴权"
 
-    Public Const RestrictMcDownload As Boolean = True
+    Public Const RestrictMcDownload As Boolean = False
+    ''' <summary>
+    ''' 本构建的发布仓库，用于检测更新与展示项目信息。
+    ''' </summary>
+    Public Const UpdateRepo As String = "Junyxor/PCL"
+    Public Const ProjectDisplayName As String = "PCL 2.99 Unlocked"
     Friend Function SecretCdnSign(UrlWithMark As String) As String
         If Not UrlWithMark.EndsWithF("{CDN}") Then Return UrlWithMark
         Return UrlWithMark.Replace("{CDN}", "").Replace(" ", "%20")
@@ -145,8 +150,65 @@ Friend Module ModSecret
 
 #Region "更新"
 
-    Friend Sub UpdateCheckByButton()
-        Hint("该版本中不包含更新功能……")
+    ''' <summary>
+    ''' 查询 GitHub Releases 并返回最新版本，失败时返回 Nothing。
+    ''' 必须在工作线程执行。
+    ''' </summary>
+    Friend Function UpdateGetLatest() As JObject
+        Try
+            Dim Url As String = $"https://api.github.com/repos/{UpdateRepo}/releases/latest"
+            Dim Raw As String = NetRequestByClientRetry(Url, Headers:={{"Accept", "application/vnd.github+json"}}, RequireJson:=True)
+            Return Raw.DeserializeJson(Of JObject)()
+        Catch ex As Exception
+            Logger.Warn(ex, "获取启动器更新信息失败")
+            Return Nothing
+        End Try
+    End Function
+    ''' <summary>
+    ''' 从 Release 的 tag 或 name 中解析版本号，例如 v2.99.0.0-unlocked → 2.99.0.0。
+    ''' </summary>
+    Friend Function UpdateParseVersion(Tag As String) As Version
+        If String.IsNullOrWhiteSpace(Tag) Then Return Nothing
+        Dim Match = System.Text.RegularExpressions.Regex.Match(Tag, "\d+(\.\d+){1,3}")
+        If Not Match.Success Then Return Nothing
+        Dim Parsed As Version = Nothing
+        If Version.TryParse(Match.Value, Parsed) Then Return Parsed
+        Return Nothing
+    End Function
+    ''' <summary>
+    ''' 检查更新。手动触发时显示结果弹窗，否则静默。
+    ''' </summary>
+    Friend Sub UpdateCheckByButton(Optional IsManual As Boolean = True)
+        RunInThread(
+        Sub()
+            Dim Release = UpdateGetLatest()
+            If Release Is Nothing Then
+                If IsManual Then RunInUi(Sub() Hint("检查更新失败，请检查网络后重试", HintType.Red))
+                Return
+            End If
+            Dim LatestText As String = If(Release("tag_name"), "").ToString
+            Dim Latest As Version = UpdateParseVersion(LatestText)
+            Dim Current As Version = UpdateParseVersion(VersionBaseName)
+            Dim HasNew As Boolean = Latest IsNot Nothing AndAlso Current IsNot Nothing AndAlso Latest > Current
+            Dim PageUrl As String = If(Release("html_url"), $"https://github.com/{UpdateRepo}/releases").ToString
+            '缓存最新版本，供 IsLauncherNewest 在 UI 线程同步读取
+            Settings.Set("SystemUpdateLatest", LatestText)
+            RunInUi(
+            Sub()
+                If HasNew Then
+                    Dim Body As String = If(Release("body"), "").ToString
+                    If Body.Length > 600 Then Body = Body.Substring(0, 600) & "……"
+                    If MyMsgBox($"发现新版本 {LatestText}，当前版本 {VersionBaseName}。{vbCrLf}{vbCrLf}{Body}",
+                                "发现更新", "前往下载", If(IsManual, "稍后", "")) = 1 Then
+                        OpenWebsite(PageUrl)
+                    End If
+                ElseIf IsManual Then
+                    If MyMsgBox($"当前已是最新版本（{VersionBaseName}）。", "检查更新", "确定", "打开 Release 页面") = 2 Then
+                        OpenWebsite(PageUrl)
+                    End If
+                End If
+            End Sub)
+        End Sub)
     End Sub
 
     Friend IsUpdateWaitingRestart As Boolean = False
