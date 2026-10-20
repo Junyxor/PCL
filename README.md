@@ -8,6 +8,15 @@
 >
 > 本分支与原作者龙腾猫跃及 PCL 贡献者无隶属、合作或背书关系。PCL 的著作权归原作者所有，本分支仅依据其公开许可证进行修改与分发。本程序按「现状」提供，不附带任何担保，使用风险由使用者自行承担。
 
+## 两个版本
+
+| 版本 | 说明 | 下载 |
+|---|---|---|
+| **开源版** | 修改源码后重新编译，恢复 MC 下载、整合包安装、版本修改页 MC 卡片与资源详情页安装按钮，内置微软登录与 CurseForge 凭据，并带本项目定制的弹窗、更新检测与免责声明 | [v2.99.0.0-unlocked](https://github.com/Junyxor/PCL/releases/tag/v2.99.0.0-unlocked) |
+| **发布修改版** | 以官方 2.99 正式版 exe 为底，仅做 41 字节 IL 补丁恢复下载页入口；其余保持官方原样，不内置凭据，整合包安装仍不可用 | [v2.99.0.0-patched](https://github.com/Junyxor/PCL/releases/tag/v2.99.0.0-patched) |
+
+需要完整功能请用开源版；只想在官方原版上补回下载入口请用发布修改版。
+
 [![Stars](https://img.shields.io/github/stars/Meloong-Git/PCL?style=flat&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTggLjI1YS43NS43NSAwIDAgMSAuNjczLjQxOGwxLjg4MiAzLjgxNSA0LjIxLjYxMmEuNzUuNzUgMCAwIDEgLjQxNiAxLjI3OWwtMy4wNDYgMi45Ny43MTkgNC4xOTJhLjc1MS43NTEgMCAwIDEtMS4wODguNzkxTDggMTIuMzQ3bC0zLjc2NiAxLjk4YS43NS43NSAwIDAgMS0xLjA4OC0uNzlsLjcyLTQuMTk0TC44MTggNi4zNzRhLjc1Ljc1IDAgMCAxIC40MTYtMS4yOGw0LjIxLS42MTFMNy4zMjcuNjY4QS43NS43NSAwIDAgMSA4IC4yNVoiIGZpbGw9IiNlYWM1NGYiLz48L3N2Zz4=&logoSize=auto&label=Stars&labelColor=444444&color=eac54f)](https://github.com/Meloong-Git/PCL/)
 [![Issues](https://img.shields.io/github/issues/Meloong-Git/PCL?style=flat&label=Issues&labelColor=444444&color=1F883D)](https://github.com/Meloong-Git/PCL/issues)
 [![哔哩哔哩](https://img.shields.io/badge/动态-BiliBili-00A4DB?style=flat&labelColor=444444&logoSize=auto)](https://space.bilibili.com/11343203/dynamic)
