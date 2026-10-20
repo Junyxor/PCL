@@ -108,11 +108,14 @@ Public Class PageSetupSystem
     ''' </summary>
     Public Shared Function IsLauncherNewest() As Boolean?
         Try
-            '确认服务器公告是否正常
-            Dim ServerContent As String = If(FileUtils.TryReadAsString(PathTemp & "Cache\Notice.cfg"), "")
-            If ServerContent.Split("|").Count < 3 Then Return Nothing
-            '确认是否为最新
-            Return ServerContent.Split("|")(If(BuildType = BuildTypes.Release, 2, 1)) <= VersionCode
+            '只读缓存，避免在 UI 线程发起网络请求。
+            '缓存由 UpdateCheckByButton 在工作线程中刷新。
+            Dim CachedTag As String = Settings.Get(Of String)("SystemUpdateLatest")
+            If String.IsNullOrWhiteSpace(CachedTag) Then Return Nothing
+            Dim Latest As Version = UpdateParseVersion(CachedTag)
+            Dim Current As Version = UpdateParseVersion(VersionBaseName)
+            If Latest Is Nothing OrElse Current Is Nothing Then Return Nothing
+            Return Latest <= Current
         Catch ex As Exception
             Logger.Error(ex, "确认启动器更新失败")
             Return Nothing
